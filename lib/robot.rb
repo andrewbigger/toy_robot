@@ -23,4 +23,8 @@ class Robot
       puts 'WARNING: Movement would have forced robot into an abyss'
     end
   end
+
+  def report
+    puts "#{@position[:x]}, #{@position[:y]}, #{@orientation.to_s.upcase}"
+  end
 end

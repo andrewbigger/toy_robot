@@ -72,4 +72,15 @@ describe Robot do
       end
     end
   end
+
+  describe '#report' do
+    before do
+      allow($stdout).to receive(:puts)
+      subject.report
+    end
+
+    it 'reports current status' do
+      expect($stdout).to have_received(:puts).with('1, 1, NORTH')
+    end
+  end
 end
