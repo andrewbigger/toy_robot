@@ -5,6 +5,7 @@ class Robot
   def initialize(opts)
     @position = opts[:position]
     @orientation = opts[:orientation]
+    @table = Table.new
   end
 
   def left
@@ -16,6 +17,6 @@ class Robot
   end
 
   def move
-    @position = next_position
+    @position = next_position if @table.on_table?(next_position)
   end
 end

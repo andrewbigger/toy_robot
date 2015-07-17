@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Robot do
-  let(:opts) { { orientation: :north } }
+  let(:opts) { { position: { x: 1, y: 1 }, orientation: :north } }
   subject { Robot.new(opts) }
 
   describe 'orientation wrappers' do
@@ -39,16 +39,31 @@ describe Robot do
   end
 
   describe '#move' do
-    before do
-      allow_any_instance_of(Behaviour::Movement)
-        .to receive(:next_position)
-        .and_return('new-position')
-      subject.move
+    context 'when no where near falling off table' do
+      before do
+        allow_any_instance_of(Table).to receive(:on_table?).and_return(true)
+        allow_any_instance_of(Behaviour::Movement)
+          .to receive(:next_position)
+          .and_return('new-position')
+        subject.move
+      end
+
+      it 'does set new position' do
+        position = subject.instance_variable_get(:@position)
+        expect(position).to eq 'new-position'
+      end
     end
 
-    it 'sets new position' do
-      position = subject.instance_variable_get(:@position)
-      expect(position).to eq 'new-position'
+    context 'about to fall off table' do
+      before do
+        allow_any_instance_of(Table).to receive(:on_table?).and_return(false)
+        subject.move
+      end
+
+      it 'does not set new position' do
+        position = subject.instance_variable_get(:@position)
+        expect(position).to eq(x: 1, y: 1)
+      end
     end
   end
 end
