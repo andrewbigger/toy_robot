@@ -5,7 +5,7 @@ class Robot
   def initialize(opts)
     @position = opts[:position]
     @orientation = opts[:orientation]
-    @table = Table.new
+    @table = Table.new(opts[:table_width], opts[:table_length])
   end
 
   def left
