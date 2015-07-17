@@ -57,12 +57,18 @@ describe Robot do
     context 'about to fall off table' do
       before do
         allow_any_instance_of(Table).to receive(:on_table?).and_return(false)
+        allow($stdout).to receive(:puts)
         subject.move
       end
 
       it 'does not set new position' do
         position = subject.instance_variable_get(:@position)
         expect(position).to eq(x: 1, y: 1)
+      end
+
+      it 'emits a warning' do
+        expect($stdout).to have_received(:puts)
+          .with('WARNING: Movement would have forced robot into an abyss')
       end
     end
   end

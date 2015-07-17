@@ -17,6 +17,10 @@ class Robot
   end
 
   def move
-    @position = next_position if @table.on_table?(next_position)
+    if @table.on_table?(next_position)
+      @position = next_position
+    else
+      puts 'WARNING: Movement would have forced robot into an abyss'
+    end
   end
 end
