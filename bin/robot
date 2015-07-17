@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'optparse'
+require_relative '../lib/robot'
+
+opt = OptionParser.new do |opt|
+  opt.banner = "USAGE: robot"
+
+  opt.on_tail('-h', '--help') do
+    puts opt
+    exit
+  end
+end
+
+opt.parse!(ARGV)
+
+unless ARGV.size == 1
+  puts opt
+  exit
+end
+
+cmd = ARGV.shift
