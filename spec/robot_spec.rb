@@ -35,4 +35,18 @@ describe Robot do
       end
     end
   end
+
+  describe '#move' do
+    before do
+      allow_any_instance_of(Behaviour::Movement)
+        .to receive(:next_position)
+        .and_return('new-position')
+      subject.move
+    end
+
+    it 'sets new position' do
+      position = subject.instance_variable_get(:@position)
+      expect(position).to eq 'new-position'
+    end
+  end
 end
