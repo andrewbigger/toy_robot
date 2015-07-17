@@ -6,7 +6,9 @@ describe Robot do
 
   describe 'orientation wrappers' do
     before do
-      allow(subject).to receive(:next_direction).and_return('new-orientation')
+      allow_any_instance_of(Behaviour::Pivot)
+        .to receive(:next_direction)
+        .and_return('new-orientation')
     end
 
     describe '#left' do
